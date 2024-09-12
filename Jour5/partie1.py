@@ -115,12 +115,12 @@ def get_all_companies_with_name(name: str) -> list[dict]:
 
 def get_and_store_companies(filename: str, name: str):
     try:
-        # 1. Récupérer les entreprises via l'API
+        # Récupérer les entreprises via l'API
         companies = get_all_companies_with_name(name)
         if not companies:
             return  # Si aucune entreprise n'est trouvée ou en cas d'erreur API
 
-        # 2. Lire le fichier existant (si le fichier existe)
+        # Lire le fichier existant (si le fichier existe)
         existing_companies = []
         if os.path.exists(filename):
             with open(filename, mode='r', newline='', encoding='utf-8') as file:
@@ -132,15 +132,15 @@ def get_and_store_companies(filename: str, name: str):
                         'date_creation': row['date_creation']
                     })
 
-        # 3. Fusionner les nouvelles entreprises avec les entreprises existantes
+        # Fusionner les nouvelles entreprises avec les entreprises existantes
         # On s'assure de ne pas dupliquer les entreprises déjà présentes
         siren_existing = {company['SIREN'] for company in existing_companies}
         new_companies = [c for c in companies if c['SIREN'] not in siren_existing]
 
         all_companies = existing_companies + new_companies
-        # 4. Trier les entreprises par SIREN
+        # Trier les entreprises par SIREN
         all_companies_sorted = sorted(all_companies, key=itemgetter('SIREN'))
-        # 5. Écrire toutes les entreprises dans le fichier (écrasement)
+        # Écrire toutes les entreprises dans le fichier (écrasement)
         with open(filename, mode='w', newline='', encoding='utf-8') as file:
             fieldnames = ['SIREN', 'nom_complet', 'date_creation']
             writer = csv.DictWriter(file, fieldnames=fieldnames)

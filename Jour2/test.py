@@ -1,10 +1,8 @@
-def read_all_lines(filename: str) -> (list[str], list[str]):
-    # Ouvrir le fichier en mode lecture et lire toutes les lignes
-    with open(filename, 'r') as file:
-        lines = file.readlines()  # Toutes les lignes du fichier sous forme de liste
+def copy_characters(input_file: str, output_file: str, nb: int):
+    # Ouvre le fichier source en mode lecture ('r')
+    with open(input_file, 'r') as source_file:
+        characters = source_file.read(nb)  # Lit nb caractères
     
-    # Créer une liste avec une ligne sur deux (en utilisant le slicing)
-    lines_every_other = lines[::2]
-    
-    # Retourner le tuple contenant les deux listes
-    return lines, lines_every_other
+    # Ouvre le fichier de destination en mode ajout ('a')
+    with open(output_file, 'a') as destination_file:
+        destination_file.write(characters)  # Écrit les caractères sans ajouter de saut de ligne supplémentaire
